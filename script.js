@@ -43,6 +43,18 @@ function placePiece(piece, color, row, col,old_row,old_col){
         div.style.backgroundImage = "url("+img+")"
         div.addEventListener("click", possibleMove)
         turn = !turn
+        if (turn === true){
+            var move = document.getElementById("white")
+            move.textContent = "White has to play"
+            var move = document.getElementById("black")
+            move.textContent = ""
+        }
+        else{
+            var move = document.getElementById("white")
+            move.textContent = ""
+            var move = document.getElementById("black")
+            move.textContent = "Black has to play"
+        }
         console.log(turn)
         }
 }
@@ -69,17 +81,7 @@ function possibleMove(e){
         }
     }
     else if (piece === "Knight"){
-        if (color === "b" && turn === false){
-            highlight(row, col, piece, color, row+2, col+1)
-            highlight(row, col, piece, color, row+2, col-1)
-            highlight(row, col, piece, color, row-2, col+1)
-            highlight(row, col, piece, color, row-2, col-1)
-            highlight(row, col, piece, color, row+1, col+2)
-            highlight(row, col, piece, color, row+1, col-2)
-            highlight(row, col, piece, color, row-1, col+2)
-            highlight(row, col, piece, color, row-1, col-2)
-        }
-        else if (color === "w" && turn === true){
+        if ((color === "b" && turn === false) || (color === "w" && turn === true)){
             highlight(row, col, piece, color, row+2, col+1)
             highlight(row, col, piece, color, row+2, col-1)
             highlight(row, col, piece, color, row-2, col+1)
@@ -91,13 +93,155 @@ function possibleMove(e){
         }
     }
     else if (piece === "Rook"){
-        if (color === "b" && turn === false){
-            for (var i=0;i<8;i++){
-                highlight(row, col, piece, color, row+i, col)
+        if ((color === "b" && turn === false) || (color === "w" && turn === true)){
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col)===true){
+                    highlight(row, col, piece, color, row+i, col)
+                }
+                else {
+                    break
+                }
             }
-            for (var i=0;i<8;i++){
-                highlight(row, col, piece, color, row, col+i)
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col)===true){
+                    highlight(row, col, piece, color, row-i, col)
+                }
+                else {
+                    break
+                }
             }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row, col+i)===true){
+                    highlight(row, col, piece, color, row, col+i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row, col-i)===true){
+                    highlight(row, col, piece, color, row, col-i)
+                }
+                else {
+                    break
+                }
+            }
+        }
+    }
+    else if (piece === "Bishop"){
+        if ((color === "b" && turn === false) || (color === "w" && turn === true)){
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col+i)===true){
+                    highlight(row, col, piece, color, row+i, col+i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col-i)===true){
+                    highlight(row, col, piece, color, row+i, col-i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col-i)===true){
+                    highlight(row, col, piece, color, row-i, col-i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col+i)===true){
+                    highlight(row, col, piece, color, row-i, col+i)
+                }
+                else {
+                    break
+                }
+            }
+        }
+    }
+    else if (piece === "Queen"){
+        if ((color === "b" && turn === false) || (color === "w" && turn === true)){
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col)===true){
+                    highlight(row, col, piece, color, row+i, col)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col)===true){
+                    highlight(row, col, piece, color, row-i, col)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row, col+i)===true){
+                    highlight(row, col, piece, color, row, col+i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row, col-i)===true){
+                    highlight(row, col, piece, color, row, col-i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col+i)===true){
+                    highlight(row, col, piece, color, row+i, col+i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row+i, col-i)===true){
+                    highlight(row, col, piece, color, row+i, col-i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col-i)===true){
+                    highlight(row, col, piece, color, row-i, col-i)
+                }
+                else {
+                    break
+                }
+            }
+            for (var i=1;i<=8;i++){
+                if (checkEmpty(row-i, col+i)===true){
+                    highlight(row, col, piece, color, row-i, col+i)
+                }
+                else {
+                    break
+                }
+            }
+        }
+    }
+    else if (piece === "King"){
+        if ((color === "b" && turn === false) || (color === "w" && turn === true)){
+            highlight(row, col, piece, color, row+1, col)
+            highlight(row, col, piece, color, row-1, col)
+            highlight(row, col, piece, color, row, col+1)
+            highlight(row, col, piece, color, row, col-1)
+            highlight(row, col, piece, color, row+1, col+1)
+            highlight(row, col, piece, color, row-1, col-1)
+            highlight(row, col, piece, color, row+1, col-1)
+            highlight(row, col, piece, color, row-1, col+1)
         }
     }
 }
@@ -147,12 +291,15 @@ function getPiece(piece){
     return piece
 }
 function checkEmpty(row,col){
-    var div = document.getElementById("r"+row).children[col-1]
-    if (div.style.backgroundImage === ""){
-        return true
-    }
-    else {
-        return false
+    if (1<=row && row<=8 && 1<=col && col<=8 ){
+        var div = document.getElementById("r"+row).children[col-1]
+        console.log(div)
+        if (div.style.backgroundImage === ""){
+            return true
+        }
+        else {
+            return false
+        }
     }
 }
 var turn = true
