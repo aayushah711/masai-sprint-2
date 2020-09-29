@@ -72,6 +72,8 @@ function possibleMove(e){
                 highlight(row, col, piece, color, row-2, col)
             }
             highlight(row, col, piece, color, row-1, col)
+            kill(row, col, piece, color, row-1, col-1)
+            kill(row, col, piece, color, row-1, col+1)
         }
         else if (color === "w" && turn === true) {
             if (row === 2){
@@ -248,16 +250,19 @@ function possibleMove(e){
 
 function highlight(row, col, piece, color, new_row,new_col){
     if (1<=new_row && new_row<=8 && 1<=new_col && new_col<=8 ){
+        // Fetches the new square
         var div = document.getElementById("r"+new_row).children[new_col-1]
+        // If the square is empty
         if (checkEmpty(new_row, new_col) === true){
-            div.textContent = "o"
-            // Used my first callback function
+            // Add o to it
+            div.textContent += "o"
             console.log("removed",div)
+            // Remove event listeners from this square
             for (var i=0;i<10;i++){
                 div.removeEventListener("click",playPiece)
                 div.removeEventListener("click", possibleMove)
             }
-            div.removeEventListener("click",playPiece)
+            // add event listener playPiece to this square
             div.addEventListener("click", playPiece)
         }
     }
@@ -268,6 +273,27 @@ function highlight(row, col, piece, color, new_row,new_col){
         removeX()
         div.removeEventListener("click",playPiece)
     }
+}
+
+function kill(row, col, piece, color, new_row,new_col){
+    if (1<=new_row && new_row<=8 && 1<=new_col && new_col<=8 ){
+        // Fetches the new square
+        var div = document.getElementById("r"+new_row).children[new_col-1]
+        // If the square has an enemy
+        if (checkEnemy(new_row, new_col, color) === true){
+            // Add x to it
+            div.textContent += "x"
+            // Remove event listeners from this square
+            for (var i=0;i<10;i++){
+                div.removeEventListener("click",playPiece)
+                div.removeEventListener("click", possibleMove)
+            }
+            // add event listener playPiece to this square
+            div.addEventListener("click", playPiece)
+        }
+
+    }
+
 }
 
 function checkPath(){
@@ -301,6 +327,15 @@ function checkEmpty(row,col){
             return false
         }
     }
+}
+function checkEnemy(row,col){
+    var div = document.getElementById("r"+row).children[col-1]
+    var enemy = div.style.backgroundImage
+    var color = getPiece(enemy)[1]
+    if (div.style.backgroundImage != "" && ){
+        return true
+    }
+
 }
 var turn = true
 resetGame()
